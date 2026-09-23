@@ -54,11 +54,10 @@ export default function App() {
           <h2 className="buildname">{build.name}</h2>
           <p className="blurb">{build.blurb}</p>
 
-          {validation && <ValidationCard v={validation} build={build} />}
-
           <BuildList build={build} validation={validation} onOpen={setOpen} />
           <AbilityOrder build={build} />
           <KitCard kit={result.kit} analytics={analytics!} />
+          {validation && <ValidationCard v={validation} build={build} />}
         </>
       )}
       {open && <ItemCard item={open} onClose={() => setOpen(null)} />}
@@ -173,7 +172,7 @@ function KitCard({ kit, analytics }: { kit: KitProfile; analytics: HeroAnalytics
   );
 }
 
-const clean = (s?: string) => (s ?? '').replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<br\s*\/?>/g, '\n').replace(/<[^>]+>/g, '').replace(/\{[^}]*\}/g, '').trim();
+const clean = (s?: string) => (s ?? '').replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/\s+/g, ' ').replace(/<br\s*\/?>/g, '\n').replace(/<[^>]+>/g, '').replace(/\{[^}]*\}/g, '').trim();
 
 function propLine(item: Item, key: string) {
   const p = item.properties?.[key];
