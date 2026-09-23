@@ -42,7 +42,7 @@ export const WEIGHTS = {
 };
 const WR_PRIOR_MATCHES = 200; // smoothing strength
 const WR_SPREAD = 0.06; // ±6pp win-rate delta maps to 0..1
-const MIN_MATCH_SHARE = 0.01; // ignore items bought in <1% of this hero's games
+const MIN_MATCH_SHARE = 0.2; // ignore items bought in <20% of this hero's games
 const MAX_ACTIVES = 3;
 // Item counts per phase come from the data: how many items high-skill players
 // buy on this hero with an average buy time inside each window.

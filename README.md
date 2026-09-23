@@ -38,7 +38,7 @@ Requests are made one at a time with a 450 ms gap (the API allows 200 per minute
 
 Inputs: the item catalog, the hero's asset data, and that hero's **aggregate** analytics snapshot. Nothing else. The module does not import any data file; it's a pure function `generateBuilds(hero, catalog, analytics, { lateSlots })`.
 
-Candidates: shopable items bought in ≥1% of the hero's high-skill games. Each candidate gets a score for each archetype:
+Candidates: shopable items bought in ≥20% of the hero's high-skill games (raised from 1%; see Round 3). Each candidate gets a score for each archetype:
 
 | Term | Weight | Meaning |
 |---|---|---|
@@ -104,6 +104,19 @@ Scored once per attempt on all three held-out tests (shown build; Infernus / Las
 | **B + staple win-rate fix (shipped)** | **59%** | **51%** | **73%** |
 
 A was reverted. The kit check had been leading with Gun Carry on Infernus and Mina, but high-skill players buy mostly spirit on both. B fixes that using aggregate data only. The staple fix helps Lash and Mina but costs Infernus 4 points. Picking among three variants by test score leaks some information from the tests, so treat these numbers as slightly optimistic.
+
+## Round 3: usage filter (2026-09-23)
+
+Raising the minimum pick rate for candidates removes niche items the scoring used to over-rate. Shown build, Infernus / Lash / Mina:
+
+| Min pick rate | Infernus | Lash | Mina | Smallest build |
+|---|---|---|---|---|
+| 1% (before) | 59% | 51% | 73% | |
+| 10% | 63% | 50% | 77% | |
+| **20% (shipped)** | **67%** | **61%** | **79%** | 15 items |
+| 25% | 67% | 69% | 76% | builds start shrinking |
+
+20% was chosen because it is the highest value tried that doesn't cut build sizes on the test heroes. This choice was also made by looking at test scores, so the same optimism caveat applies.
 
 ## Personalization (`src/personalization.ts`)
 
